@@ -1,0 +1,54 @@
+<% include ./partials/header %>
+<style>
+  body{
+    background-color: rgb(155, 153, 153);
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function(){
+    $("#myButton").click(function(){
+      //alert("Testing");
+      var blogTitle= $("#bTitle").val();
+      var blogSubtitle= $("#bSubtitle").val();
+      var comImage= $("#bImage").val();
+      var blog= CKEDITOR.instances.myEditor.getData();
+
+      var data = {
+        blogTitle:blogTitle,
+        blogSubtitle:blogSubtitle,
+        comImage:comImage,
+        blog:blog
+      }
+      //console.log(blogTitle+" --- "+blogSubtitle+" --- "+comImage+" --- "+blog);
+      $.post('addNewBlog', {data:data})
+      .then(function(addedBlog){
+        console.log(addedBlog);
+      })
+    });
+  });
+</script>
+<div class="container">
+    <form style="margin-top:100px; ">
+      <h1 style="text-align: center;">Add new Blog</h1>
+      <div class="form-group">
+        <label for="bTitle">Blog Title</label>
+        <input type="text" class="form-control" id="bTitle" placeholder="Blog Title">
+      </div>
+      <div class="form-group">
+          <label for="bSubtitle">Blog Subtitle</label>
+          <input type="text" class="form-control" id="bSubtitle" placeholder="Blog Subtitle">
+        </div>
+      <div class="form-group">
+         <label for="bImage">Blog Commercial Image URL</label>
+         <input type="text" class="form-control" id="bImage" placeholder="Blog Commercial Image URL">
+      </div>
+      <textarea name="editor1" id=myEditor></textarea>
+      <button id="myButton" style="margin-top:20px " type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script src="https://cdn.ckeditor.com/4.11.2/standard/ckeditor.js"></script>
+<script>
+  CKEDITOR.replace( 'editor1' );
+</script
+<% include ./partials/footer %>
